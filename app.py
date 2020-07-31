@@ -43,9 +43,8 @@ def index():
         }
     ).get_result()
     options = []
-    results = [
-
-    ]
+    results = []
+    
     print(json.dumps(response, indent=2))
 
     results = response['output']['generic'][0]['text']    
