@@ -3,7 +3,6 @@ app = Flask(__name__)
 
 @app.route('/', methods = ['GET','POST'])
 def index():
-    import collections
     import json
     from ibm_watson import AssistantV2
     from ibm_cloud_sdk_core.authenticators import IAMAuthenticator
@@ -16,6 +15,7 @@ def index():
     apikey = 'vZV1hfwjrjTXP9t4DFMCuJIJlR8tEZNY_LHdvI_NvgCY'
     aid = 'd1acd50b-5d98-44bb-92b4-0e44f7a47d80'
     url = 'https://api.au-syd.assistant.watson.cloud.ibm.com/instances/80e8f805-c2c2-4ed2-9915-03561beda06c'
+    url2 = 'https://api.au-syd.assistant.watson.cloud.ibm.com/instances/80e8f805-c2c2-4ed2-9915-03561beda06c/v2/assistants/d1acd50b-5d98-44bb-92b4-0e44f7a47d80/sessions'
 
     authenticator = IAMAuthenticator(apikey)
     assistant = AssistantV2(
@@ -39,7 +39,8 @@ def index():
         session_id = session['session_id'], 
         input={
             'message_type': 'text',
-            'text': user_input            
+            'text': user_input, 
+            'auto_correct' : True         
         }
     ).get_result()
     options = []
