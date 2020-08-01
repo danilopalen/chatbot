@@ -31,18 +31,33 @@ def index():
 
     if request.method == 'POST':
         user_input = request.form['input']
+
+        with open("session.txt") as file: 
+            sessionChat = file.read()
+
+        response = assistant.message(
+                assistant_id = aid,
+                session_id = sessionChat, 
+                input={
+                    'message_type': 'text',
+                    'text': user_input,        
+                }
+        ).get_result()
+
     else:
         user_input = ''
+        with open('session.txt', 'w') as file:
+            file.write(session['session_id'])
 
-    response = assistant.message(
-        assistant_id = aid,
-        session_id = session['session_id'], 
-        input={
-            'message_type': 'text',
-            'text': user_input, 
-            'auto_correct' : True         
-        }
-    ).get_result()
+        response = assistant.message(
+                assistant_id = aid,
+                session_id = session['session_id'], 
+                input={
+                    'message_type': 'text',
+                    'text': user_input,        
+                }
+        ).get_result()
+    
     options = []
     results = []
     
